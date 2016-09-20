@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <title>هنرستان موثق پور-قرچک</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+  <meta name="viewport" content="width=device-width">
+
+  <script type="text/javascript" src="{% static 'js/jquery-2.1.4.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/semantic.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/date.js' %}"></script>
+
+
+  <link  rel="stylesheet" type="text/css" href="{% static 'css/semantic.css' %}" />
+  <link  rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+</head>
+<body style="background-image: {% static 'css/img/4.jpg' %}">
+
+
+
+
+
+<!-- header -->
+<div id="top_header" class="ui inverted segment">
+  <button class="tiny ui inverted teal button" id="home">  خانه  </button>
+  <button class="tiny ui inverted teal button" id="timetable"> برنامه هفتگی </button>
+    <button class="tiny ui inverted teal button" id="teachers"> کادر آموزشی </button>
+  <button class="tiny ui inverted teal button" id="stars"> افتخار آفرینان </button>
+  <button class="tiny ui inverted teal button" id="about_us"> درباره ما </button>
+  <button class="tiny ui inverted teal button" id="contact_us">  تماس با ما   </button>
+  <button class="tiny ui inverted teal button" id="exams">  نمونه سوال   </button>
+  
+  <button class="tiny ui inverted teal button" id="login">  ورود <i class="sign in icon"></i>   </button>
+  <button class="tiny ui inverted teal button" id="profile" style="display:none"> صفحه شخصی </button>
+
+  <div class="ui small icon input" id="search">
+    <i class="inverted circular search link icon"></i>
+    <input placeholder="جستجو..." type="text" id="search_text">
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- main body -->
+<div id="main_body_l">
+
+
+
+
+<div class="ui red piled segment single_post">
+  <div id="center_post">
+    <div class="ui big centered image">
+      <img src="{{ post.main_pic.url }}" >
+    </div>
+
+    <h2>{{post.title}}</h2>
+    <h4 id="p_date">{{post.date}}</h4>
+    {{post.main|linebreaks}}
+
+    <div></div>
+    <br>
+    <div class="ui compact menu">
+      <a class="item like_item" id="like{{post.id}}">
+        <i class="icon heart" ></i>
+        <div class="floating ui green label" id="like_lable{{post.id}}">{{post.like}}</div>
+      </a>
+      <a class="item dislike_item" id="dislike{{post.id}}">
+        <i class="icon thumbs outline down" ></i>
+        <div class="floating ui red label" id="dislike_lable{{post.id}}">{{post.dislike}}</div>
+      </a>
+    </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="ui compact menu">
+      <a class="item seen_item" id="seen{{post.id}}">
+        <i class="unhide icon"></i>
+        <div class="floating ui label" >{{post.seen}}</div>
+      </a>
+    </div>
+    <br>
+  <div class="ui divider"></div>
+  <h3 style="text-align:right">دیدگاه ها </h3>
+
+    {% for j in post.comments.all %}
+    <div class="ui raised segment" style="text-align:right">
+      <h4>{{j.name}}</h4>
+      <p>{{j.text}}</p>
+      <div class="cm_cm">
+      <div class="ui compact menu">
+          <a class="item like_item_cm" id="like_cm{{j.id}}">
+            <i class="icon heart" ></i>
+            <div class="floating ui green label" id="like_lable_cm{{j.id}}">{{j.like}}</div>
+          </a>
+          <a class="item dislike_item_cm" id="dislike_cm{{j.id}}">
+            <i class="icon thumbs outline down" ></i>
+            <div class="floating ui red label" id="dislike_lable_cm{{j.id}}">{{j.dislike}}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="ui inverted segment" >
+      <div class="ui inverted form" style="text-align:right">
+        <div class="field">
+          <label> نام </label>
+          <input name="first-name" id="cm_name" placeholder=" نام خود را وارد کنید ..." type="text">
+        </div>
+        <div class="field">
+          <label>ایمیل</label>
+          <input name="last-name"  id="cm_email" placeholder=" آدرس ایمیل خود را وارد کنید ..." type="text">
+        </div>
+          <div class="field">
+            <label> نظر شما </label>
+            <textarea rows="2" id="cm_cm"></textarea>
+          </div>
+          <button class="ui button submit_comment" id="submit_comment{{post.id}}">ارسال </button>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+<!-- footer -->
+<div class="ui inverted segment" id="footer">
+
+  <div class="ui inverted segment footer_part" id="l_posts"> آخرین پست ها 
+    <div class="ui divider"></div>
+    {% for i in latest_p %}
+      <h5 class="ui teal inverted header latest_p" id="lp_{{i.id}}">{{i.title}}</h5>
+    {% endfor %}
+  </div>
+
+
+  <div class="ui inverted segment footer_part" id="l_about"> درباره ما 
+    <div class="ui divider"></div>
+        کلیه حقوق مطالب ، تصاویر و طرح قالب برای سایت محفوظ است
+        <br><br>
+        استفاده از مطالب به هر نحو تنها با کسب اجازه کتبی از مدیر امکان پذیر است
+        <br><br>
+  </div>
+  <div class="ui inverted segment footer_part" id="l_icon">
+    <button class="ui circular facebook icon button">
+      <i class="facebook icon"></i>
+    </button>
+    <button class="ui circular twitter icon button">
+      <i class="twitter icon"></i>
+    </button>
+    <button class="ui circular google plus icon button">
+      <i class="google plus icon"></i>
+    </button>
+  </div>
+</div>
+
+<!-- login modal -->
+<div class="ui modal login" id="login_modal" style="text-align:right">
+  <i class="close icon"></i>
+  <div class="header">
+    ورود به سایت
+  </div>
+  <div class="content">
+    <div class="description">
+      <div class="ui two column middle aligned very relaxed stackable grid" id="login_inner">
+  <div class="column" style="text-align:right">
+    <div class="ui form">
+      <div class="ui dimmer" id="reg_dimmer2">
+        <div class="ui indeterminate text loader">لطفا شکیبا باشید</div>
+      </div>
+      <div class="required field">
+        <label>نام کاربری</label>
+        <div class="ui left icon input">
+          <input  type="text" id="login_username" name="username">
+          <i class="user icon"></i>
+        </div>
+      </div>
+      <div class="required field">
+        <label>رمز عبور</label>
+        <div class="ui left icon input">
+          <input type="password" id="login_password" name="password">
+          <i class="lock icon"></i>
+        </div>
+      </div>
+      <div class="ui blue submit button" id="login_submit">ورود</div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- success modal -->
+<div class="ui modal" id="success_reg" style="text-align:center">
+  <i class="close icon"></i>
+  <div class="header">
+  </div>
+
+  <div class="content">
+    <div class="description">
+    <h3 id="inner_success_modal">
+    شما با موفقیت وارد شدید
+      </h3>
+      <button class="ui green button" id="confirm_reg">خب</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- error modal -->
+<div class="ui modal" id="error_reg" style="text-align:center">
+  <i class="close icon"></i>
+  <div class="header">
+  </div>
+
+  <div class="content">
+    <div class="description">
+    <h3 id="inner_error_modal">
+    نام کاربری و یا رمز عبور صحیح نمیباشد
+      </h3>
+      <button class="ui green button" id="confirm_err">خب</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
